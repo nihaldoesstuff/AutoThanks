@@ -1,0 +1,19 @@
+[
+    {
+        "modid": "${id}",
+        "name": "${name}",
+        "description": "A mod that automatically replies to Good Luck messages!",
+        "version": "${version}",
+        "mcversion": "1.8.9",
+        "url": "https://github.com/nihaldoesstuff/AutoThanks",
+        "updateUrl": "https://github.com/nihaldoesstuff/AutoThanks",
+        "authorList": [
+            "Nihal"
+        ],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": [
+        ]
+    }
+]
