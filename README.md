@@ -1,6 +1,6 @@
 # AutoThanks
 ![Download Count](https://img.shields.io/github/downloads/nihaldoesstuff/AutoThanks/total?color=08ff52&style=for-the-badge)
-![Latest Download Count](https://img.shields.io/github/downloads-pre/nihaldoesstuff/AutoThanks/latest/total?color=08ff52&style=for-the-badge)
+![Latest Download Count](https://img.shields.io/github/downloads-pre/nihaldoesstuff/AutoThanks/latest/total?color=08ff52&style=for-the-badge)\
 - A mod that automatically replies to Good Luck messages!
 
 
