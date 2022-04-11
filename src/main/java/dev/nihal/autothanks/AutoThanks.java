@@ -71,22 +71,25 @@ public class AutoThanks {
     public void onMessageReceieved(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
 
-        if (Configs.autoTYEnabled) {
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
 
-            if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+
+            if (Configs.autoTYEnabled){
+
             }
 
-            if (msg.contains(Minecraft.getMinecraft().getSession().getUsername())) {
-                return;
-            }
+
+                if (msg.contains(Minecraft.getMinecraft().getSession().getUsername())) {
+                    return;
+                }
             String[] splitMessage = StringUtils.stripControlCodes(msg).split("\\b");
             for (String currentWord : splitMessage) {
                 if (keyWords.contains(currentWord)) {
                     Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + gettyMessages());
                 }
             }
-        }
 
+        }
     }
 
     private static String gettyMessages() {
