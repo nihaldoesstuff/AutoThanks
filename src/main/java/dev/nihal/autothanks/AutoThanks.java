@@ -24,6 +24,7 @@ public class AutoThanks {
 
 
     @Mod.Instance("autothanks")
+    public static AutoThanks instance;
 
     public static final String NAME = "@NAME@", VER = "@VERSION@", ID = "@ID@";
 
@@ -38,7 +39,6 @@ public class AutoThanks {
         config.initialize();
         MinecraftForge.EVENT_BUS.register(this);
         new AutoThanksCommand().register();
-
     }
 
     private static ArrayList<String> keyWords = getKeyWords();
