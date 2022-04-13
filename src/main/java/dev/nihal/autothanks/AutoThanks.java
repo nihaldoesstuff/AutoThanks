@@ -1,7 +1,11 @@
 package dev.nihal.autothanks;
 
-import dev.nihal.autothanks.command.AutoThanksCommand;
+import dev.nihal.autothanks.command.Command;
 import dev.nihal.autothanks.config.Configs;
+
+import static dev.nihal.autothanks.config.Configs.tyMessages;
+import static dev.nihal.autothanks.config.Configs.getRandomTYmessage;
+
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.utils.Multithreading;
 import gg.essential.vigilance.Vigilant;
@@ -12,35 +16,32 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
 
 @Mod(modid = AutoThanks.ID, name = AutoThanks.NAME, version = AutoThanks.VER)
 
 public class AutoThanks {
 
+        // Registering
 
     @Mod.Instance("autothanks")
+    public static AutoThanks instance;
 
     public static final String NAME = "@NAME@", VER = "@VERSION@", ID = "@ID@";
 
     public static Vigilant config;
-
-    private static final String[] tymessages = {"Thank You", "Good luck to you too!", "Yay! Good luck", "<3", ":)", "You too :D", "ty", "gl to u too", "thanks"};
-
 
     @Mod.EventHandler
     public void init (FMLInitializationEvent event){
         config = new Configs();
         config.initialize();
         MinecraftForge.EVENT_BUS.register(this);
-        new AutoThanksCommand().register();
-
+        new Command().register();
     }
-
+        // All the good luck messages.
+        // Thanks to Lan for helping me with this part.
     private static ArrayList<String> keyWords = getKeyWords();
 
     private static ArrayList<String> getKeyWords() {
@@ -64,6 +65,8 @@ public class AutoThanks {
         return returnList;
     }
 
+        // Here is what happens when any of the above message is detected.
+
     @SubscribeEvent
     public void onMessageReceieved(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
@@ -81,14 +84,16 @@ public class AutoThanks {
             for (String currentWord : splitMessage) {
                 if (keyWords.contains(currentWord)) {
 
-                    Multithreading.schedule(() -> {Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + gettyMessages());
-                    },Configs.tyDelay, TimeUnit.SECONDS);
+                    // This is to check if the mod is turned onn and if random messages is onn
+                    // It alsp does the message sending!
+
+                    Multithreading.schedule(() -> Minecraft.getMinecraft().thePlayer.sendChatMessage(Configs.randomMessage ? getRandomTYmessage() : Configs.getTYmessage()), Configs.tyDelay, TimeUnit.SECONDS);
                 }
             }
         }
     }
 
     private static String gettyMessages() {
-        return tymessages[Configs.tyPhrase];
+        return tyMessages[Configs.tyMessage];
     }
 }
