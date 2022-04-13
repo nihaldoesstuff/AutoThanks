@@ -3,6 +3,7 @@ package dev.nihal.autothanks;
 import dev.nihal.autothanks.command.AutoThanksCommand;
 import dev.nihal.autothanks.config.Configs;
 import gg.essential.api.EssentialAPI;
+import gg.essential.api.utils.Multithreading;
 import gg.essential.vigilance.Vigilant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringUtils;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 @Mod(modid = AutoThanks.ID, name = AutoThanks.NAME, version = AutoThanks.VER)
@@ -22,7 +24,6 @@ public class AutoThanks {
 
 
     @Mod.Instance("autothanks")
-    public static AutoThanks instance;
 
     public static final String NAME = "@NAME@", VER = "@VERSION@", ID = "@ID@";
 
@@ -37,10 +38,6 @@ public class AutoThanks {
         config.initialize();
         MinecraftForge.EVENT_BUS.register(this);
         new AutoThanksCommand().register();
-
-    }
-
-    public void onMessageReceived(@NotNull ClientChatReceivedEvent event) {
 
     }
 
@@ -73,29 +70,25 @@ public class AutoThanks {
 
         if (EssentialAPI.getMinecraftUtil().isHypixel()) {
 
-
             if (Configs.autoTYEnabled){
-
             }
 
+            if (msg.contains(Minecraft.getMinecraft().getSession().getUsername())) {
+                return;
+            }
 
-                if (msg.contains(Minecraft.getMinecraft().getSession().getUsername())) {
-                    return;
-                }
             String[] splitMessage = StringUtils.stripControlCodes(msg).split("\\b");
             for (String currentWord : splitMessage) {
                 if (keyWords.contains(currentWord)) {
-                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + gettyMessages());
+
+                    Multithreading.schedule(() -> {Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac " + gettyMessages());
+                    },Configs.tyDelay, TimeUnit.SECONDS);
                 }
             }
-
         }
     }
 
     private static String gettyMessages() {
         return tymessages[Configs.tyPhrase];
     }
-
 }
-
-

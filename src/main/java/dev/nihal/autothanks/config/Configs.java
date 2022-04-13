@@ -6,6 +6,7 @@ import gg.essential.vigilance.data.PropertyType;
 
 import java.io.File;
 
+
 public class Configs extends Vigilant {
 
     @Property(
@@ -24,16 +25,16 @@ public class Configs extends Vigilant {
     )
     public static int tyPhrase = 0;
 
+    @Property(
+            type = PropertyType.SLIDER, name = "Delay",
+            description = "Delay to say the message.\n§eMeasured in seconds.",
+            category = "General", subcategory = "AutoThanks",
+            max = 5
+    )
+    public static int tyDelay = 1;
+
 
     public Configs() {
         super(new File("autothanks.toml"), "AutoThanks");
-    }
-
-    public boolean isModEnabled() {
-        return autoTYEnabled;
-    }
-
-    public int getTyPhrase() {
-        return tyPhrase;
     }
 }
